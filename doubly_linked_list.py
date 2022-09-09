@@ -176,7 +176,7 @@ class DoublyLinkedList:
 
             # Switch pointers.
             current.next = previous
-            current.previous = previous
+            current.previous = next_node
 
             # Update nodes.
             previous = current
