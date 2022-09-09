@@ -1,7 +1,7 @@
 from typing import Any
 
 
-class Node():
+class Node:
 
     def __init__(self, val: Any) -> None:
         self.val = val
@@ -10,7 +10,8 @@ class Node():
     def __str__(self) -> None:
         return self.val
 
-class LinkedList():
+
+class LinkedList:
     """A single linked list.
 
     Add: O(n)
@@ -24,7 +25,8 @@ class LinkedList():
     * No need to resize when growing or shrinking
       (generally a double-linked list will give better performance though)
     """
-    def __init__(self):
+
+    def __init__(self) -> None:
         self._head = None
         self.size = 0
 
