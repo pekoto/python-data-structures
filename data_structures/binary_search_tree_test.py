@@ -1,6 +1,6 @@
 import unittest
 
-from binary_search_tree import BinarySearchTree
+from data_structures.binary_search_tree import BinarySearchTree
 
 
 class TestBinarySearchTree(unittest.TestCase):
