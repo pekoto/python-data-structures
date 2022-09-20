@@ -1,3 +1,4 @@
+import sys
 from typing import Any
 
 
@@ -221,6 +222,26 @@ class BinarySearchTree:
     def size(self) -> int:
         """Returns the size of the tree."""
         return _size(self.root)
+
+    def is_valid(self) -> bool:
+        """Returns True if the BST is valid, or False otherwise.
+
+        - Pass in the min and max bounds.
+        - The node on the left must be between min and node key.
+        - The node on the right must be between node key and max.
+        """
+        return self._is_valid(self._root, -sys.maxsize-1, sys.maxsize)
+
+    def _is_valid(self, node: Node, min_bound: int, max_bound: int) -> bool:
+        """Recursive helper function."""
+        if not node:
+            return True
+
+        if node.key < min_bound or node.key > max_bound:
+            return False
+
+        return (self._is_valid(node.left, min_bound, node.key) and
+                self._is_valid(node.right, node.key, max_bound))
 
 
 def _size(node: Node) -> int:

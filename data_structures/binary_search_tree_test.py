@@ -1,6 +1,6 @@
 import unittest
 
-from data_structures.binary_search_tree import BinarySearchTree
+from binary_search_tree import BinarySearchTree
 
 
 class TestBinarySearchTree(unittest.TestCase):
@@ -50,6 +50,17 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertEqual("5", binary_search_tree.get(5))
         self.assertEqual("20", binary_search_tree.get(20))
         self.assertEqual("7", binary_search_tree.get(7))
+
+    def test_is_valid(self):
+        bst = BinarySearchTree()
+        bst.add(10, "10")
+        bst.add(5, "5")
+        bst.add(1, "1")
+        bst.add(20, "20")
+        bst.add(50, "50")
+        bst.add(7, "7")
+
+        self.assertTrue(bst.is_valid())
 
 
 if __name__ == '__main__':
