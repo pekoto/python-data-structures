@@ -2,7 +2,7 @@ from typing import List
 
 
 def binary_search(nums: List[int], key: int) -> int:
-    """Finds the index of key in an list of sorted nums.
+    """Finds the index of key in a list of sorted nums.
 
     1. Set up left & right
     2. While left <= right...
