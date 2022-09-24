@@ -10,6 +10,9 @@ def binary_search(nums: List[int], key: int) -> int:
         - Update left or right depending on if key < or > arr[mid]
         - If mid found, return it
 
+    Space: O(1)
+    Time: O(log n)
+
     param nums: A sorted list of integers.
     param key: The key to find in the list of integers.
     """
