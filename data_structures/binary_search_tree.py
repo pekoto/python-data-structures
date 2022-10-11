@@ -1,5 +1,5 @@
 import sys
-from typing import Any
+from typing import Any, List
 
 
 class Node:
@@ -242,6 +242,78 @@ class BinarySearchTree:
 
         return (self._is_valid(node.left, min_bound, node.key) and
                 self._is_valid(node.right, node.key, max_bound))
+
+    def inorder_traversal(self, nodes: List[Any]) -> None:
+        """Inorder traversal.
+           1. Traverse left
+           2. Visit root
+           3. Traverse right
+           In a BST, gives nodes in ascending order.
+                  5
+               /    \
+              3      8
+             / \    / \
+            1   4  7  10
+           1, 3, 4, 5, 7, 8, 10
+        """
+        self._inorder_traversal(self._root, nodes)
+
+    def _inorder_traversal(self, node: Node, nodes: List[Any]) -> None:
+        """Recursive helper function."""
+        if not node:
+            return
+
+        self._inorder_traversal(node.left, nodes)
+        nodes.append(node.val)
+        self._inorder_traversal(node.right, nodes)
+
+    def preorder_traversal(self, nodes: List[Any]) -> None:
+        """Preorder traversal.
+        1. Visit root
+        2. Traverse left
+        3. Traverse right
+        Can be used to create a copy of the tree.
+               5
+            /    \
+           3      8
+          / \    / \
+         1   4  7  10
+        5, 3, 1, 4, 8, 7, 10
+        """
+        self._preorder_traversal(self._root, nodes)
+
+    def _preorder_traversal(self, node: Node, nodes: List[Any]) -> None:
+        """Recursive helper function."""
+        if not node:
+            return
+
+        nodes.append(node.val)
+        self._preorder_traversal(node.left, nodes)
+        self._preorder_traversal(node.right, nodes)
+
+    def postorder_traversal(self, nodes: List[Any]) -> None:
+        """Preorder traversal.
+            1. Traverse left
+            2. Traverse right
+            3. Visit root
+            Can be used to delete the tree.
+                   5
+                /    \
+               3      8
+              / \    / \
+             1   4  7  10
+            1, 4, 3, 7, 10, 8, 5
+        """
+        self._postorder_traversal(self._root, nodes)
+
+    def _postorder_traversal(self, node: Node, nodes: List[Any]) -> None:
+        """Recursive helper function."""
+        if not node:
+            return
+
+        self._postorder_traversal(node.left, nodes)
+        self._postorder_traversal(node.right, nodes)
+        nodes.append(node.val)
 
 
 def _size(node: Node) -> int:

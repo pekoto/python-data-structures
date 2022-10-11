@@ -62,6 +62,51 @@ class TestBinarySearchTree(unittest.TestCase):
 
         self.assertTrue(bst.is_valid())
 
+    def test_inorder_traversal(self):
+        bst = BinarySearchTree()
+        bst.add(5, 5)
+        bst.add(3, 3)
+        bst.add(8, 8)
+        bst.add(1, 1)
+        bst.add(4, 4)
+        bst.add(7, 7)
+        bst.add(10, 10)
+        nodes = []
+
+        bst.inorder_traversal(nodes=nodes)
+
+        self.assertListEqual([1, 3, 4, 5, 7, 8, 10], nodes)
+
+    def test_preorder_traversal(self):
+        bst = BinarySearchTree()
+        bst.add(5, 5)
+        bst.add(3, 3)
+        bst.add(8, 8)
+        bst.add(1, 1)
+        bst.add(4, 4)
+        bst.add(7, 7)
+        bst.add(10, 10)
+        nodes = []
+
+        bst.preorder_traversal(nodes=nodes)
+
+        self.assertListEqual([5, 3, 1, 4, 8, 7, 10], nodes)
+
+    def test_postorder_traversal(self):
+        bst = BinarySearchTree()
+        bst.add(5, 5)
+        bst.add(3, 3)
+        bst.add(8, 8)
+        bst.add(1, 1)
+        bst.add(4, 4)
+        bst.add(7, 7)
+        bst.add(10, 10)
+        nodes = []
+
+        bst.postorder_traversal(nodes=nodes)
+
+        self.assertListEqual([1, 4, 3, 7, 10, 8, 5], nodes)
+
 
 if __name__ == '__main__':
     unittest.main()
