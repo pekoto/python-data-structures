@@ -22,7 +22,7 @@ class DoublyLinkedList:
         * No need to resize.
         * Add left/right: O(1)
         * Pop left/right: O(1)
-        * Remove: O(n)
+        * Remove: O(1)
     """
 
     def __init__(self):
