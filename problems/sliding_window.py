@@ -53,3 +53,42 @@ def smallest_sum_subarray(nums: List[int], k: int) -> int:
         return 0
 
     return smallest_window
+
+
+def k_distinct_chars(items: str, k: int) -> int:
+    """
+    Given a string, find the length of the longest substring in it with no more
+    than K distinct characters.
+
+    You can assume that K is less than or equal to the length of the given string.
+
+    Example 1:
+
+    Input: String="araaci", K=2
+    Output: 4
+    Explanation: The longest substring with no more than '2' distinct characters is "araa".
+    """
+    counts = {}
+    max_len = 0
+    start = 0
+    distinct_chars = 0
+
+    for end in range(len(items)):
+        c = items[end]
+
+        if c not in counts or counts[c] == 0:
+            counts[c] = 0
+            distinct_chars += 1
+
+        counts[c] += 1
+
+        while distinct_chars > k:
+            start_char = items[start]
+            counts[start_char] -= 1
+            if counts[start_char] == 0:
+                distinct_chars -= 1
+            start += 1
+
+        max_len = max(max_len, (end - start) + 1)
+
+    return max_len
