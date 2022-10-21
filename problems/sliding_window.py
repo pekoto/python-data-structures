@@ -92,3 +92,39 @@ def k_distinct_chars(items: str, k: int) -> int:
         max_len = max(max_len, (end - start) + 1)
 
     return max_len
+
+
+def longest_substring_with_distinct_chars(input_str: str) -> int:
+    """
+    Given a string, find the length of the longest substring, which has all distinct characters.
+
+    Example 1:
+    Input: String="aabccbb", Output: 3
+    Explanation: The longest substring with distinct characters is "abc".
+    """
+    max_len = 0
+    start = 0
+    char_counts = {}
+    repeated_chars = 0
+
+    for end in range(len(input_str)):
+        c = input_str[end]
+
+        if c not in char_counts:
+            char_counts[c] = 0
+
+        if char_counts[c] >= 1:
+            repeated_chars += 1
+
+        char_counts[c] += 1
+
+        while repeated_chars > 0:
+            start_char = input_str[start]
+            if char_counts[start_char] == 2:
+                repeated_chars -= 1
+            char_counts[start_char] -= 1
+            start += 1
+
+        max_len = max(max_len, (end-start)+1)
+
+    return max_len
