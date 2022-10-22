@@ -128,3 +128,42 @@ def longest_substring_with_distinct_chars(input_str: str) -> int:
         max_len = max(max_len, (end-start)+1)
 
     return max_len
+
+
+def longest_substring_with_letter_replacement(input_str: str, k: int) -> int:
+    """
+    Given a string with lowercase letters only, if you are allowed to replace no more than ‘k’ letters with any letter, find the length of the longest substring having the same letters after replacement.
+
+    Example 1:
+
+    Input: String="aabccbb", k=2
+    Output: 5
+    Explanation: Replace the two 'c' with 'b' to have a longest repeating substring "bbbbb".
+    """
+    most_frequent_char_count = 0  # Represents char that is the same.
+    char_counts = {}
+    max_len = 0
+    start = 0
+
+    for end in range(len(input_str)):
+        c = input_str[end]
+
+        if c not in char_counts:
+            char_counts[c] = 0
+
+        char_counts[c] += 1
+
+        # Check if this char is the most common char.
+        # We want to replace all of the other chars.
+        most_frequent_char_count = max(most_frequent_char_count, char_counts[c])
+
+        # Check if the window size - most frequent char is > k.
+        # All of the chars that are not the most frequent need to be replaced.
+        if (((end-start)+1) - most_frequent_char_count) > k:
+            start_char = input_str[start]
+            char_counts[start_char] -= 1
+            start += 1
+
+        max_len = max(max_len, (end-start)+1)
+
+    return max_len

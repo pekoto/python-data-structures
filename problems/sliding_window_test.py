@@ -1,6 +1,6 @@
 import unittest
 
-from sliding_window import max_sum_subarray, smallest_sum_subarray, k_distinct_chars, longest_substring_with_distinct_chars
+from sliding_window import max_sum_subarray, smallest_sum_subarray, k_distinct_chars, longest_substring_with_distinct_chars, longest_substring_with_letter_replacement
 
 
 class SlidingWindowTest(unittest.TestCase):
@@ -23,6 +23,11 @@ class SlidingWindowTest(unittest.TestCase):
         self.assertEqual(3, longest_substring_with_distinct_chars("aabccbb"))
         self.assertEqual(2, longest_substring_with_distinct_chars("abbbb"))
         self.assertEqual(3, longest_substring_with_distinct_chars("abccde"))
+
+    def test_longest_substring_with_letter_replacement(self):
+        self.assertEqual(5, longest_substring_with_letter_replacement("aabccbb", 2))
+        self.assertEqual(4, longest_substring_with_letter_replacement("abbcb", 1))
+        self.assertEqual(3, longest_substring_with_letter_replacement("abccde", 1))
 
 
 if __name__ == '__main__':
