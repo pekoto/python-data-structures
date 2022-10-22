@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List
 
 
@@ -163,7 +164,120 @@ def longest_substring_with_letter_replacement(input_str: str, k: int) -> int:
             start_char = input_str[start]
             char_counts[start_char] -= 1
             start += 1
+            # Why not update most frequent char?
+            # Well, max_len would not be updated, since we just shrunk the window,
+            # and most_frequent would get updated in the next iteration anyway.
 
         max_len = max(max_len, (end-start)+1)
 
     return max_len
+
+
+def longest_substring_with_one_replacement(input_arr: List[int], k: int) -> int:
+    """
+    Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
+
+    Example 1:
+
+    Input: Array=[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], k=2
+                                 ^
+                              ^
+    rc=2
+    max=4
+    Output: 6
+    Explanation: Replace the '0' at index 5 and 8 to have the longest contiguous subarray of 1s having length 6.
+    """
+    start = 0
+    max_len = 0
+    replacement_count = 0
+
+    for end in range(len(input_arr)):
+        if input_arr[end] == 0:
+            replacement_count += 1
+
+        while replacement_count > k:
+            if input_arr[start] == 0:
+                replacement_count -= 1
+
+            start += 1
+
+        max_len = max(max_len, (end-start)+1)
+
+    return max_len
+
+
+def str_contains_permutation(input_str: str, pattern: str) -> bool:
+    """
+    Given a string and a pattern, find out if the string contains any permutation of the pattern.
+    Input: String="oidbcaf", Pattern="abc"
+                   ^
+                   ^
+    Output: true
+    Explanation: The string contains "bca" which is a permutation of the given pattern.
+    """
+    # Use sliding window
+    # If size of window, matches len of pattern, return True
+    # Contain a counter of chars in our pattern
+    # If counter is 0, slide forward
+    # If char is not in the str, slide start and end forward
+    pattern_counts = Counter(pattern)
+    start = 0
+    matched = 0
+
+    for end in range(len(input_str)):
+        c = input_str[end]
+
+        if c in pattern_counts:
+            pattern_counts[c] -= 1
+            if pattern_counts[c] >= 0:
+                matched += 1
+
+        if matched == len(pattern):
+            return True
+
+        if end + 1 >= len(pattern):
+            start_c = input_str[start]
+            start += 1
+
+            if start_c in pattern_counts:
+                if pattern_counts[start_c] == 0:
+                    matched -= 1
+                pattern_counts[start_c] += 1
+
+    return False
+
+
+def anagram_indices(input_str: str, pattern: str) -> List[int]:
+    """
+    Given a string and a pattern, find all anagrams of the pattern in the given string.
+    Input: String="ppqp", Pattern="pq"
+                   ^
+                   ^
+    Output: [1, 2]
+    """
+    pattern_counts = Counter(pattern)
+    start = 0
+    matched = 0
+    indices = []
+
+    for end in range(len(input_str)):
+        c = input_str[end]
+
+        if c in pattern_counts:
+            if pattern_counts[c] > 0:
+                matched += 1
+            pattern_counts[c] -= 1
+
+        if matched == len(pattern):
+            indices.append(start)
+
+        if end + 1 >= len(pattern):
+            start_c = input_str[start]
+            if start_c in pattern_counts:
+                if pattern_counts[start_c] == 0:
+                    matched -= 1
+                pattern_counts[start_c] += 1
+
+            start += 1
+
+    return indices
