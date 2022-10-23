@@ -180,11 +180,6 @@ def longest_substring_with_one_replacement(input_arr: List[int], k: int) -> int:
     Example 1:
 
     Input: Array=[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], k=2
-                                 ^
-                              ^
-    rc=2
-    max=4
-    Output: 6
     Explanation: Replace the '0' at index 5 and 8 to have the longest contiguous subarray of 1s having length 6.
     """
     start = 0
@@ -210,16 +205,9 @@ def str_contains_permutation(input_str: str, pattern: str) -> bool:
     """
     Given a string and a pattern, find out if the string contains any permutation of the pattern.
     Input: String="oidbcaf", Pattern="abc"
-                   ^
-                   ^
     Output: true
     Explanation: The string contains "bca" which is a permutation of the given pattern.
     """
-    # Use sliding window
-    # If size of window, matches len of pattern, return True
-    # Contain a counter of chars in our pattern
-    # If counter is 0, slide forward
-    # If char is not in the str, slide start and end forward
     pattern_counts = Counter(pattern)
     start = 0
     matched = 0
