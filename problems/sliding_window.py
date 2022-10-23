@@ -281,3 +281,86 @@ def anagram_indices(input_str: str, pattern: str) -> List[int]:
             start += 1
 
     return indices
+
+
+def smallest_substr_window(input_str: str, pattern: str) -> str:
+    """
+    Given a string and a pattern, find the smallest substring in the given string
+    which has all the character occurrences of the given pattern.
+
+    Input: String="abdbca", Pattern="abc"
+    Output: "bca"
+    Explanation: The smallest substring having all characters of the pattern is "bca".
+    """
+    start = 0
+    matched = 0
+    char_counts = Counter(pattern)
+    start_index = -1
+    end_index = len(input_str)+1
+
+    for end in range(len(input_str)):
+        c = input_str[end]
+
+        if c in char_counts and char_counts[c] > 0:
+            matched += 1
+
+        char_counts[c] -= 1
+
+        while matched == len(pattern):
+
+            if (end - start) < (end_index-start_index):
+                end_index = end
+                start_index = start
+
+            start_c = input_str[start]
+            if start_c in char_counts:
+                if char_counts[start_c] == 0:
+                    matched -= 1
+                char_counts[start_c] += 1
+                start += 1
+
+    if start_index == -1:
+        return ""
+
+    return input_str[start_index:end_index+1]
+
+
+def word_concat(input_str: str, words: List[str]) -> List[int]:
+    """
+    Given a string and a list of words, find all the starting indices of substrings in the
+    given string that are a concatenation of all the given words exactly once without any
+    overlapping of words. It is given that all words are of the same length.
+
+    Input: String="catfoxcat", Words=["cat", "fox"]
+    Output: [0, 3]
+    Explanation: The two substring containing both the words are "catfox" & "foxcat".
+
+    Note: This solution covers all test cases but may be wrong as the question is ambiguous.
+    """
+    start = 0
+    matched = 0
+    word_counts = Counter(words)
+    word_len = len(words[0])
+    indices = []
+
+    for end in range(0, len(input_str), word_len):
+        substr = input_str[end:end+word_len]
+
+        if word_counts[substr] > 0:
+            matched += 1
+
+        word_counts[substr] -= 1
+
+        if ((end+word_len)-start) == word_len*len(words):
+            if matched == len(words):
+                indices.append(start)
+
+            substr = input_str[start:start+word_len]
+
+            if word_counts[substr] == 0:
+                matched -= 1
+
+            word_counts[substr] += 1
+            start += word_len
+
+    return indices

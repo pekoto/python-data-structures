@@ -3,6 +3,7 @@ import unittest
 from sliding_window import max_sum_subarray, smallest_sum_subarray, k_distinct_chars
 from sliding_window import longest_substring_with_distinct_chars, longest_substring_with_letter_replacement
 from sliding_window import longest_substring_with_one_replacement, str_contains_permutation, anagram_indices
+from sliding_window import smallest_substr_window, word_concat
 
 
 class SlidingWindowTest(unittest.TestCase):
@@ -44,6 +45,16 @@ class SlidingWindowTest(unittest.TestCase):
     def test_anagram_indices(self):
         self.assertListEqual([1, 2], anagram_indices("ppqp", "pq"))
         self.assertListEqual([2, 3, 4], anagram_indices("abbcabc", "abc"))
+
+    def test_smallest_substr_window(self):
+        self.assertEqual("abdec", smallest_substr_window("aabdec", "abc"))
+        self.assertEqual("aabdec", smallest_substr_window("aabdec", "abac"))
+        self.assertEqual("bca", smallest_substr_window("abdbca", "abc"))
+        self.assertEqual("", smallest_substr_window("adcad", "abc"))
+
+    def test_word_concat(self):
+        self.assertListEqual([0, 3], word_concat("catfoxcat", ["cat", "fox"]))
+        self.assertListEqual([3], word_concat("catcatfoxfox", ["cat", "fox"]))
 
 
 if __name__ == '__main__':
