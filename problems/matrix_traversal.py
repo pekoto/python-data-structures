@@ -222,7 +222,6 @@ def count_distinct_islands(matrix: List[List[int]]) -> int:
     for row in range(rows):
         for col in range(cols):
             if not visited[row][col] and matrix[row][col] == 1:
-                pattern = ''
                 pattern = _distinct_islands_dfs(matrix, visited, row, col, 'S')  # Start
                 island_patterns.add(pattern)
 
