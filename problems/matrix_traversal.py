@@ -248,3 +248,62 @@ def _distinct_islands_dfs(matrix: List[List[int]], visited: List[List[bool]], ro
     # pattern += 'B'  # Go back
 
     return pattern
+
+
+def matrix_cycle(matrix: List[List[str]]) -> bool:
+    """
+    You are given a 2D matrix containing different characters, you need
+    to find if there exists any cycle consisting of the same character in the matrix.
+
+    A cycle is a path in the matrix that starts and ends at the same cell and has four
+    or more cells. From a given cell, you can move to one of the cells adjacent to it -
+    in one of the four directions (up, down, left, or right), if it has the same character
+    value of the current cell.
+
+    Solution:
+    * Make sure we don't move back to the previous row or col
+    * If we hit a visited cell, it must be a cycle.
+    """
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    visited = [[False for col in range(cols)] for row in range(rows)]
+
+    for row in range(rows):
+        for col in range(cols):
+            if visited[row][col]:
+                continue
+
+            chr = matrix[row][col]
+            if _matrix_cycle_dfs(matrix, visited, row, col, -1, -1, chr):
+                return True
+
+    return False
+
+
+def _matrix_cycle_dfs(
+        matrix: List[List[str]], visited: List[List[bool]],
+        row: int, col: int, previous_row: int, previous_col: int, chr: str) -> bool:
+    """Recursive helper functions."""
+    if row < 0 or row >= len(matrix) or col < 0 or col >= len(matrix):
+        return False
+
+    if matrix[row][col] != chr:
+        return False
+
+    if visited[row][col]:
+        return True
+
+    visited[row][col] = True
+
+    if row + 1 != previous_row and _matrix_cycle_dfs(matrix, visited, row+1, col, row, col, chr):
+        return True
+
+    if row - 1 != previous_row and _matrix_cycle_dfs(matrix, visited, row-1, col, row, col, chr):
+        return True
+
+    if col + 1 != previous_col and _matrix_cycle_dfs(matrix, visited, row, col+1, row, col, chr):
+        return True
+
+    if col - 1 != previous_col and _matrix_cycle_dfs(matrix, visited, row, col-1, row, col, chr):
+        return True

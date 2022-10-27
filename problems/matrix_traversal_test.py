@@ -79,6 +79,26 @@ class MatrixTraversalTest(unittest.TestCase):
 
         self.assertEqual(2, matrix_traversal.count_distinct_islands(matrix))
 
+    def test_matrix_cycle(self):
+        matrix_1 = [['a', 'a', 'a', 'a'],
+                    ['b', 'a', 'c', 'a'],
+                    ['b', 'a', 'c', 'a'],
+                    ['b', 'a', 'a', 'a']]
+
+        matrix_2 = [['a', 'a', 'a', 'a'],
+                    ['a', 'b', 'b', 'a'],
+                    ['a', 'b', 'a', 'a'],
+                    ['a', 'a', 'a', 'c']]
+
+        matrix_3 = [['a', 'b', 'e', 'b'],
+                    ['b', 'b', 'b', 'b'],
+                    ['b', 'c', 'c', 'd'],
+                    ['c', 'c', 'd', 'd']]
+
+        self.assertTrue(matrix_traversal.matrix_cycle(matrix_1))
+        self.assertTrue(matrix_traversal.matrix_cycle(matrix_2))
+        self.assertFalse(matrix_traversal.matrix_cycle(matrix_3))
+
 
 if __name__ == '__main__':
     unittest.main()
