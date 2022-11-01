@@ -93,3 +93,51 @@ def square_sorted_array(nums: List[int]) -> List[int]:
             left += 1
 
     return list(squares)
+
+
+def triplet_sum_to_zero(nums: List[int]) -> List[List[int]]:
+    """
+    Given an array of unsorted numbers, find all unique triplets in it that add up to zero.
+
+    Input: [-3, 0, 1, 2, -1, 1, -2]
+    Output: [-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]
+    """
+    # Dumb approach: Just a 3 layer loop, O^3. Can we do better?
+    # First, sort
+    # [-3, -2, -1, 0, 1, 1, 2]
+    #   ^             ^
+    #                       ^
+    #  First sort: o(n log n)
+    # Put the pointer through the array, then use 2 sum to reach target
+    # n^2 -- for each n, I go through the rest of the array n times
+    nums.sort()
+
+    result = []
+
+    for i in range(len(nums)-2):
+
+        start = i+1
+        end = len(nums)-1
+
+        if i > 0 and nums[i] == nums[i-1]:
+            continue
+
+        while start < end:
+            total = nums[i] + nums[start] + nums[end]
+
+            if total == 0:
+                result.append([nums[i], nums[start], nums[end]])
+                start += 1
+                end -= 1
+                # Skip dupes
+                while start < end and nums[start] == nums[start-1]:
+                    start += 1
+                while start < end and nums[end] == nums[end+1]:
+                    end -= 1
+            elif total > 0:
+                end -= 1
+            else:
+                # total < 0
+                start += 1
+
+    return result

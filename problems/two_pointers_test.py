@@ -20,6 +20,12 @@ class TwoPointersTest(unittest.TestCase):
         self.assertListEqual([0, 1, 4, 4, 9], two_pointers.square_sorted_array([-2, -1, 0, 2, 3]))
         self.assertListEqual([0, 1, 1, 4, 9], two_pointers.square_sorted_array([-3, -1, 0, 1, 2]))
 
+    def test_triplet_sum_to_zero(self):
+        self.assertListEqual([[-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]],
+                             two_pointers.triplet_sum_to_zero([-3, 0, 1, 2, -1, 1, -2]))
+        self.assertListEqual([[-5, 2, 3], [-2, -1, 3]],
+                             two_pointers.triplet_sum_to_zero([-5, 2, -1, -2, 3]))
+
 
 if __name__ == '__main__':
     unittest.main()
