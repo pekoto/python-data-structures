@@ -26,6 +26,39 @@ class TwoPointersTest(unittest.TestCase):
         self.assertListEqual([[-5, 2, 3], [-2, -1, 3]],
                              two_pointers.triplet_sum_to_zero([-5, 2, -1, -2, 3]))
 
+    def test_triplet_sum_closest_to_target(self):
+        self.assertEqual(1, two_pointers.triplet_sum_closest_to_target([-2, 0, 1, 2], 2))
+        self.assertEqual(0, two_pointers.triplet_sum_closest_to_target([-3, -1, 1, 2], 1))
+        self.assertEqual(3, two_pointers.triplet_sum_closest_to_target([1, 0, 1, 1], 100))
+        self.assertEqual(4, two_pointers.triplet_sum_closest_to_target([0, 0, 1, 1, 2, 6], 5))
+
+    def test_product_less_than_target(self):
+        self.assertListEqual([[2], [5], [2, 5], [3], [5, 3], [10]],
+                             two_pointers.product_less_than_target([2, 5, 3, 10], 30))
+        self.assertListEqual([[8], [2], [8, 2], [6], [2, 6], [5], [6, 5] ],
+                             two_pointers.product_less_than_target([8, 2, 6, 5], 50))
+
+    def test_dutch_national_flag(self):
+        l = [1, 0, 2, 1, 0]
+        two_pointers.dutch_national_flag(l)
+        self.assertListEqual([0, 0, 1, 1, 2], l)
+
+        l = [2, 2, 0, 1, 2, 0]
+        two_pointers.dutch_national_flag(l)
+        self.assertListEqual([0, 0, 1, 2, 2, 2], l)
+
+    def test_compare_backspaces(self):
+        self.assertTrue(two_pointers.compare_backspaces("xy#z", "xzz#"))
+        self.assertFalse(two_pointers.compare_backspaces("xy#z", "xyz#"))
+        self.assertTrue(two_pointers.compare_backspaces("xp#", "xyz##"))
+        self.assertTrue(two_pointers.compare_backspaces("xywrrmp", "xywrrmu#p"))
+
+    def test_minimum_window_sort(self):
+        self.assertEqual(5, two_pointers.minimum_window_sort([1, 2, 5, 3, 7, 10, 9, 12]))
+        self.assertEqual(5, two_pointers.minimum_window_sort([1, 3, 2, 0, -1, 7, 10]))
+        self.assertEqual(0, two_pointers.minimum_window_sort([1, 2, 3]))
+        self.assertEqual(3, two_pointers.minimum_window_sort([3, 2, 1]))
+
 
 if __name__ == '__main__':
     unittest.main()

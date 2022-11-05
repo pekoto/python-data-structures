@@ -1,5 +1,6 @@
 from typing import List
 from collections import deque
+import sys
 
 
 def target_sum(nums: List[int], target: int) -> List[int]:
@@ -52,7 +53,7 @@ def remove_duplicates(nums: List[int]) -> int:
 
 def remove_key(nums: List[int], key: int) -> int:
     """
-    ven an unsorted array of numbers and a target ‘key’,
+    Given an unsorted array of numbers and a target ‘key’,
     remove all instances of ‘key’ in-place and return the new length of the array.
     """
     # Input: [11, 1, 2, 2, 1], Key=2, Output: 4
@@ -141,3 +142,209 @@ def triplet_sum_to_zero(nums: List[int]) -> List[List[int]]:
                 start += 1
 
     return result
+
+
+def triplet_sum_closest_to_target(nums: List[int], target: int) -> int:
+    """
+    Given an array of unsorted numbers and a target number, find a triplet in the
+    array whose sum is as close to the target number as possible, return the sum
+    of the triplet. If there are more than one such triplet, return the sum of the
+    triplet with the smallest sum.
+
+    Input: [-2, 0, 1, 2], target=2
+    Output: 1
+    Explanation: The triplet [-2, 1, 2] has the closest sum to the target.
+    """
+    # [-2, 0, 1, 2]
+    #   ^
+    #         ^
+    #             ^
+    # 1. We can use the 3 pointer approach, keeping closest to target
+    # But how to find the smallest sum? We need to store SUM and smallest difference
+    smallest_sum = sys.maxsize
+    smallest_diff = sys.maxsize
+
+    for i in range(len(nums)-2):
+
+        start = i+1
+        end = len(nums)-1
+
+        while start < end:
+            current_sum = nums[i] + nums[start] + nums[end]
+            diff = abs(target-current_sum)
+
+            if diff < smallest_diff:
+                smallest_sum = current_sum
+                smallest_diff = diff
+
+            if diff == smallest_diff and current_sum < smallest_sum:
+                smallest_sum = current_sum
+
+            if current_sum < target:
+                start += 1
+            elif current_sum > target:
+                end -= 1
+            else:
+                # current_sum == target
+                return 0
+
+    return smallest_sum
+
+
+def product_less_than_target(nums: List[int], target: int) -> List[int]:
+    """
+    Given an array with positive numbers and a positive target number,
+    find all of its contiguous subarrays whose product is less than the target number.
+
+    [2, 5, 3, 10], target=30
+              ^
+               ^
+     product=2
+
+    [2], [5], [2, 5], [3], [5, 3], [10]
+    """
+    result = []
+    start = 0
+    product = 1
+
+    for end in range(len(nums)):
+        product *= nums[end]
+
+        while product >= target and start < len(nums):
+            product /= nums[start]
+            start += 1
+
+        # Now we know that all subarrays from left>right have
+        # product < target. To avoid dupes, we start with subarray
+        # containing only right and then extend left.
+        temp_list = deque()
+        for i in range(end, start-1, -1):
+            temp_list.appendleft(nums[i])
+            result.append(list(temp_list))
+
+    return result
+
+
+def dutch_national_flag(nums: List[int]) -> None:
+    """
+    Given an array containing 0s, 1s and 2s, sort the array in-place.
+    You should treat numbers of the array as objects, hence, we can’t
+    count 0s, 1s, and 2s to recreate the array.
+
+    Input: [1, 0, 2, 1, 0]
+    Output: [0 0 1 1 2]
+    """
+    low_pointer = 0
+    high_pointer = len(nums)-1
+
+    i = 0
+
+    while i <= high_pointer:
+
+        if nums[i] == 1:
+            i += 1
+        elif nums[i] == 0:
+            nums[i], nums[low_pointer] = nums[low_pointer], nums[i]
+            i += 1
+            low_pointer += 1
+        elif nums[i] == 2:
+            nums[i], nums[high_pointer] = nums[high_pointer], nums[i]
+            high_pointer -= 1
+
+
+def compare_backspaces(str1: str, str2: str) -> bool:
+    """
+    Given two strings containing backspaces (identified by the character ‘#’),
+    check if the two strings are equal.
+
+    Example 1:
+
+    Input: str1="xy#z", str2="xzz#" = Output: true
+    After applying backspaces the strings become "xz" and "xz" respectively.
+    """
+
+    # xy#z
+    #    ^
+    # xyz#
+    #  ^
+    i = len(str1)-1
+    j = len(str2)-1
+
+    while i >= 0 and j >= 0:
+        str1_backspace_count = 0
+        while i >= 0 and str1[i] == '#':
+            str1_backspace_count += 1
+            i -= 1
+
+        i -= str1_backspace_count
+
+        str2_backspace_count = 0
+        while j >= 0 and str2[j] == '#':
+            str2_backspace_count += 1
+            j -= 1
+
+        j -= str2_backspace_count
+
+        if i < 0 and j < 0:
+            return True
+
+        if i < 0 or j < 0:
+            return False
+
+        if str1[i] != str2[j]:
+            return False
+
+        i -= 1
+        j -= 1
+
+    return True
+
+
+def minimum_window_sort(nums: List[int]) -> int:
+    """
+    Given an array, find the length of the smallest subarray in it
+    which when sorted will sort the whole array.
+
+    Input: [1, 2, 5, 3, 7, 10, 9, 12], Output: 5
+    We need to sort only the subarray [5, 3, 7, 10, 9] to make the whole array sorted.
+    """
+    # [1, 2, 5, 3, 7, 10, 9, 12]
+    #        ^
+    #                       ^
+    # start point = bigger than number after it
+    # if i < len(nums) -1 and nums[i] > nums[i+1]
+    # end point = bigger number than before, going backwards
+    # [10, 0, 1, 2]
+    # Find the lower number out of order.
+    # Where should it go? That's the start.
+    # Find the highest number out of order.
+    # Where should it go? That's the end.
+    start = 0
+    end = 0
+
+    smallest_num = sys.maxsize
+    largest_num = -sys.maxsize-1
+
+    # First, find the smallest number out of order
+    for i in range(len(nums)):
+        if i > 0 and nums[i] < nums[i-1]:
+            if nums[i] < smallest_num:
+                end = i
+                smallest_num = nums[i]
+
+            if nums[i] > largest_num:
+                end = i
+                largest_num = nums[i]
+
+    if smallest_num == sys.maxsize:
+        # List is sorted
+        return 0
+
+    # Now end should be set,
+    # but we need to find where the smallest num should go
+    for i in range(len(nums)):
+        if nums[i] > smallest_num:
+            start = i
+            break
+
+    return (end-start)+1
