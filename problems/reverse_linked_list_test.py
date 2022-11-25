@@ -90,7 +90,7 @@ class ReverseLinkedListTest(unittest.TestCase):
         head.next.next.next.next = Node(5)
         head.next.next.next.next.next = Node(6)
 
-        new_head = reverse_linked_list.rotate_linked_list(head, 3)
+        new_head = reverse_linked_list.rotate_linked_list_2(head, 3)
 
         self.assertEqual(4, new_head.value)
         self.assertEqual(5, new_head.next.value)
@@ -106,7 +106,7 @@ class ReverseLinkedListTest(unittest.TestCase):
         head.next.next.next = Node(4)
         head.next.next.next.next = Node(5)
 
-        new_head = reverse_linked_list.rotate_linked_list(head, 8)
+        new_head = reverse_linked_list.rotate_linked_list_2(head, 8)
 
         self.assertEqual(3, new_head.value)
         self.assertEqual(4, new_head.next.value)

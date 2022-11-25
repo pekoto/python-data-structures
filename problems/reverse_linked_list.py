@@ -223,3 +223,33 @@ def rotate_linked_list(head: Node, rotations: int) -> Node:
     last_node_of_rotated_list.next = None
 
     return head
+
+
+def rotate_linked_list_2(head: Node, rotations: int) -> Node:
+
+    # First, work out the tail and size of the current linked list
+    tail = head
+    len_of_list = 1
+    while tail.next:
+        tail = tail.next
+        len_of_list += 1
+
+    # Next, make it a circular list, so when we rotate it we don't go off the end
+    tail.next = head
+
+    # Now, work out the rotations and size of list to move, skip size
+    rotations %= len_of_list
+    size_of_sublist = len_of_list - rotations
+
+    # Now, get the last node in the sublist to move
+    last_node_in_sublist = head
+    i = 1
+
+    while i < size_of_sublist:
+        last_node_in_sublist = last_node_in_sublist.next
+        i += 1
+
+    head = last_node_in_sublist.next
+    last_node_in_sublist.next = None
+
+    return head
