@@ -243,3 +243,22 @@ def _max_path_sum_dfs(node: TreeNode, result: List[int]) -> int:
     result[0] = max(result[0], node_sum)
 
     return max(left_sum, right_sum) + node.val
+
+
+def get_height(root: TreeNode) -> int:
+    """Finds the height of a BST.
+
+            10
+          /   \
+         20   30
+        /  \
+      40   50
+
+    """
+    if not root:
+        return 0
+
+    left_height = get_height(root.left)
+    right_height = get_height(root.right)
+
+    return max(left_height, right_height) + 1

@@ -130,6 +130,15 @@ class BinaryTreeDfs(unittest.TestCase):
 
         self.assertEqual(31, binary_tree_dfs.max_path_sum(root))
 
+    def test_get_height(self):
+        root = TreeNode(10)
+        root.left = TreeNode(20)
+        root.left.left = TreeNode(40)
+        root.left.right = TreeNode(50)
+        root.right = TreeNode(30)
+
+        self.assertEqual(3, binary_tree_dfs.get_height(root))
+
 
 if __name__ == '__main__':
     unittest.main()
