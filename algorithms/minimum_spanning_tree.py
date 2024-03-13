@@ -22,7 +22,7 @@ def min_cost_connect_all_points(points: list[list[int]]) -> int:
     """
     num_points = len(points)
 
-    graph = defaultdict(list)  # Each node has a list of ppints [cost, neighbor]
+    graph = defaultdict(list)  # Each node has a list of points [cost, neighbor]
 
     # Build an adjacency list of points to distances and neighbors
     for i in range(num_points):
